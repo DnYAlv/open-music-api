@@ -17,14 +17,16 @@ class SongsHandler {
     return response;
   }
 
-  async getSongsHandler() {
-    const songs = await this._service.getSongs();
-    return {
+  async getSongsHandler(request, h) {
+    const { title = '', performer = '' } = request.query;
+    const songs = await this._service.getSongs(title, performer);
+    const response = h.response({
       status: 'success',
       data: {
         songs,
       },
-    };
+    });
+    return response;
   }
 
   async getSongByIdHandler(request, h) {
